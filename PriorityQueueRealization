@@ -4,7 +4,7 @@ class Queue:
     def __init__(self):   #конструктор
         self.elements = []
 
-    def addEl(self, prior, el):   #метод додавання елементу
+    def addEl(self, prior, el):   #метод додавання елементу та одразу сортуванням черги за пріоритетами
         self.elements.append((prior, el))
         self.elements.sort(key = lambda x: x[0])
 
