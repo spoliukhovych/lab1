@@ -1,0 +1,45 @@
+#реалізація черги з пріоритетом
+
+class Queue:
+    def __init__(self):   #конструктор
+        self.elements = []
+
+    def addEl(self, prior, el):   #метод додавання елементу
+        self.elements.append((prior, el))
+        self.elements.sort(key = lambda x: x[0])
+
+    def delEl(self):   #метод видалення елементу за правилами черги
+        self.elements.pop(0)
+
+    def nextEl(self):   #метод, який повертає наступний елемент не видаляя його
+        return self.elements[0][1]
+
+    def printPriorEl(self):  #метод, який виводить елементи з їх пріоритетами
+        print(self.elements)
+
+    def printEl(self):  #метод, який виводить елементи черги(відсортовані за пріоритетами)
+        lst = []
+        for el in self.elements:
+            lst.append(el[1])
+        print(lst)
+
+    def getPriorEl(self):   #метод, який повертає елементи з їх пріоритетами
+        return self.elements
+
+    def getEl(self):   #метод, який повертає елементи черги(відсортовані за пріоритетами)
+        lst = []
+        for el in self.elements:
+            lst.append(el[1])
+        return lst
+
+q = Queue()
+q.addEl(5, "El1")
+q.addEl(3, "El2")
+q.addEl(7, "El3")
+q.addEl(1, "El4")
+q.addEl(6, "El5")
+print("Черга(відсортована за пріоритетами) після додавання елементів:", q.getEl())
+q.delEl()
+print("Черга(відсортована за пріоритетами) після видалення елементу:", q.getEl())
+print("Наступний елемент: ", q.nextEl())
+print("Всі елементи черги з їх пріоритетами: ", q.getPriorEl())
