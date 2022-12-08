@@ -1,0 +1,149 @@
+from datetime import datetime, timedelta
+from calendar import monthrange
+
+class Timee:
+    def __init__(self, y=0, m=0, d=0, h=0, min=0, s=0):
+        self.__y = y
+        self.__m = m
+        self.__d = d
+        self.__h = h
+        self.__min = min
+        self.__s = s
+
+        testVal = datetime(y, m, d, h, min, s)
+
+    def printTime(self):
+        y1 = self.__y
+        m1 = self.__m
+        d1 = self.__d
+        h1 = self.__h
+        min1 = self.__min
+        s1 = self.__s
+        if y1 / 9 <= 1:
+            y1 = "0" + str(y1)
+        if m1 / 9 <= 1:
+            m1 = "0" + str(m1)
+        if d1 / 9 <= 1:
+            d1 = "0" + str(d1)
+        if h1 / 9 <= 1:
+            h1 = "0" + str(h1)
+        if min1 / 9 <= 1:
+            min1 = "0" + str(min1)
+        if s1 / 9 <= 1:
+            s1 = "0" + str(s1)
+        print(f"{y1}.{m1}.{d1}, {h1}:{min1}:{s1}")
+
+    def getDgts(self):
+        return [self.__y, self.__m, self.__d, self.__h, self.__min, self.__s]
+
+
+def daysBtw(d1, d2: Timee):
+    l1 = d1.getDgts()
+    l2 = d2.getDgts()
+
+    y1 = l1[0]
+    m1 = l1[1]
+    ds1 = l1[2]
+    h1 = l1[3]
+    min1 = l1[4]
+    s1 = l1[5]
+
+    y2 = l2[0]
+    m2 = l2[1]
+    ds2 = l2[2]
+    h2 = l2[3]
+    min2 = l2[4]
+    s2 = l2[5]
+
+    dat1 = datetime(y1, m1, ds1, h1, min1, s1)
+    dat2 = datetime(y2, m2, ds2, h2, min2, s2)
+
+    dif = dat1 - dat2
+    return dif.days
+
+def secondsBtw(d1, d2: Timee):
+    l1 = d1.getDgts()
+    l2 = d2.getDgts()
+
+    y1 = l1[0]
+    m1 = l1[1]
+    ds1 = l1[2]
+    h1 = l1[3]
+    min1 = l1[4]
+    s1 = l1[5]
+
+    y2 = l2[0]
+    m2 = l2[1]
+    ds2 = l2[2]
+    h2 = l2[3]
+    min2 = l2[4]
+    s2 = l2[5]
+
+    dat1 = datetime(y1, m1, ds1, h1, min1, s1)
+    dat2 = datetime(y2, m2, ds2, h2, min2, s2)
+
+    dif = dat1 - dat2
+    addS = dif.days * 86400
+    dif = dif.seconds + addS
+    return dif
+
+def minBtw(d1, d2: Timee):
+    dif = secondsBtw(d1, d2)
+    dif = dif / 60
+    return round(dif)
+
+def hrsBtw(d1, d2: Timee):
+    dif = secondsBtw(d1, d2)
+    dif = dif / 3600
+    return round(dif)
+
+
+def monthsBtw(d1, d2: Timee):
+    l1 = d1.getDgts()
+    l2 = d2.getDgts()
+
+    y1 = l1[0]
+    m1 = l1[1]
+    ds1 = l1[2]
+    h1 = l1[3]
+    min1 = l1[4]
+    s1 = l1[5]
+
+    y2 = l2[0]
+    m2 = l2[1]
+    ds2 = l2[2]
+    h2 = l2[3]
+    min2 = l2[4]
+    s2 = l2[5]
+
+    dat1 = datetime(y1, m1, ds1, h1, min1, s1)
+    dat2 = datetime(y2, m2, ds2, h2, min2, s2)
+
+    delta = 0
+    while True:
+        mdays = monthrange(dat2.year, dat2.month)[1]
+        dat2 += timedelta(days=mdays)
+        if dat2 <= dat1:
+            delta += 1
+        else:
+            break
+    return delta
+
+
+def yrsBtw(d1, d2: Timee):
+    dif = monthsBtw(d1, d2)
+    dif = dif / 12
+    return round(dif)
+
+d1 = Timee(2022, 10, 12, 8, 45, 32)
+d2 = Timee(2021, 10, 12, 8, 30, 20)
+
+d1.printTime()
+d2.printTime()
+
+print(f"Кількість секунд між датами: {secondsBtw(d1, d2)}")
+print(f"Кількість хвилин між датами: {minBtw(d1, d2)}")
+print(f"Кількість годин між датами: {hrsBtw(d1, d2)}")
+print(f"Кількість днів між датами: {daysBtw(d1, d2)}")
+print(f"Кількість місяців між датами: {monthsBtw(d1, d2)}")
+print(f"Кількість років між датами: {yrsBtw(d1, d2)}")
